@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
 #include <pqxx/pqxx>
 
 #include "./headers/user.h"
@@ -8,8 +10,9 @@ using namespace std;
 
 
 int main() {
+
     try {
-        Database db("postgres", "postgres", "123456", "127.0.0.1", "5432");
+        Database db(getenv("POSTGRES_DB"), getenv("POSTGRES_USER"), getenv("POSTGRES_PASSWORD"), getenv("DB_HOST"), getenv("DB_PORT"));
         UserManager userManager(db);
         userManager.createTable();
 
