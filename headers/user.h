@@ -69,11 +69,16 @@ class UserManager {
         UserManager(Database& _db): db(_db) {}
 
         User createUser(const std::string& username, const std::string& email, const std::string& password);
+
         User getUser(const int id);
         User getUserByUsername(const std::string& username);
         User getUserByEmail(const std::string& email);
+
         User authenticate(const std::string& username, const std::string& password);
         User authenticateByEmail(const std::string& email, const std::string& password);
+
+        void changePassword(const std::string& username, const std::string& old_password, const std::string& new_password);
+        void changePasswordByEmail(const std::string& email, const std::string& old_password, const std::string& new_password);
 
         void createTable();
 };

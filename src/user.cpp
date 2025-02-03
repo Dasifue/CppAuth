@@ -83,6 +83,20 @@ User UserManager::authenticateByEmail(const std::string& email, const std::strin
     return user;
 }
 
+
+void UserManager::changePassword(const std::string& username, const std::string& old_password, const std::string& new_password) {
+    User user = authenticate(username, old_password);
+    user.setPassword(new_password);
+    db.exec("UPDATE c_user SET password = '" + user.getPassword() + "' WHERE id = " + std::to_string(user.getId()));
+}
+
+
+void UserManager::changePasswordByEmail(const std::string& email, const std::string& old_password, const std::string& new_password) {
+    User user = authenticateByEmail(email, old_password);
+    user.setPassword(new_password);
+    db.exec("UPDATE c_user SET password = '" + user.getPassword() + "' WHERE id = " + std::to_string(user.getId()));
+}
+
 void UserManager::createTable() {
     db.exec("CREATE TABLE IF NOT EXISTS c_user (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, CONSTRAINT unique_username UNIQUE (username), CONSTRAINT unique_email UNIQUE (email))");
 }
