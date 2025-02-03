@@ -72,6 +72,8 @@ class UserManager {
         User getUser(const int id);
         User getUserByUsername(const std::string& username);
         User getUserByEmail(const std::string& email);
+        User authenticate(const std::string& username, const std::string& password);
+        User authenticateByEmail(const std::string& email, const std::string& password);
 
         void createTable();
 };

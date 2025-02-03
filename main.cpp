@@ -17,10 +17,21 @@ int main() {
         userManager.createTable();
 
 
-        userManager.createUser("user1", "user1@gmail.com", "123456");
+        try {
+            userManager.createUser("user1", "user1@gmail.com", "123456");
+        }
+        catch (const exception &e) {
+            cerr << e.what() << endl;
+        }
 
-        User user = userManager.getUserByUsername("user1");
-        user.print();
+        try {
+            User user = userManager.authenticate("user1", "123456");
+            cout << "User authenticated" << endl;
+            user.print();
+        }
+        catch (const exception &e) {
+            cerr << e.what() << endl;
+        }
         
     }
     catch (const exception &e) {

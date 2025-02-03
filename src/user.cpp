@@ -65,6 +65,24 @@ User UserManager::getUserByEmail(const std::string& email) {
 }
 
 
+
+User UserManager::authenticate(const std::string& username, const std::string& password) {
+    User user = getUserByUsername(username);
+    if(!user.isValidPassword(password)) {
+        throw std::invalid_argument("Invalid password");
+    }
+    return user;
+}
+
+
+User UserManager::authenticateByEmail(const std::string& email, const std::string& password) {
+    User user = getUserByEmail(email);
+    if(!user.isValidPassword(password)) {
+        throw std::invalid_argument("Invalid password");
+    }
+    return user;
+}
+
 void UserManager::createTable() {
     db.exec("CREATE TABLE IF NOT EXISTS c_user (id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, CONSTRAINT unique_username UNIQUE (username), CONSTRAINT unique_email UNIQUE (email))");
 }
